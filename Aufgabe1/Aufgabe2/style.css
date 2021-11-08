@@ -72,6 +72,7 @@ header{
     font-size: 20px;
     text-decoration: none;
     position: center;
+    
 }
 .straßen{
     display: flex;
@@ -88,7 +89,7 @@ header{
     font-size: large;
     margin-bottom: 5px;
     margin-left: 20px;
-    
+
 }
 #title{
     position: absolute;
@@ -96,7 +97,15 @@ header{
     margin-left: 20px;
     font-weight: bold;
     background-color: orchid;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    animation-duration: 4s;
+  }
+#title:hover {
+    animation: colored 1s ease-in-out;
 }
+
 .cover{
     flex: 1;
     margin-left: 50px;
@@ -108,7 +117,7 @@ header{
     background-color: lightgoldenrodyellow;
 }
 h3, .aktivitäten{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Red Hat Mono', monospace;
     font-size: large;
     margin-bottom: 50px;
 }
@@ -118,12 +127,28 @@ h3, .aktivitäten{
 }
 a:hover{
     background-color: lightsteelblue;
+    transition: witdh 2s, height 4s;
 }
 #portal{
     transform: rotate(300deg);
     color: white;
+    padding: 20px;
 }
+
+
 #test::first-letter {
     font-size: 50px;
 background-color: lightslategrey;
+}
+
+@keyframes colored {
+    from {background-color: red;}
+    to {background-color: yellow;}
+  }
+
+/*Responsiv:*/
+@media (max-width: 600px){
+    #portal {
+        display: none
+    }
 }
