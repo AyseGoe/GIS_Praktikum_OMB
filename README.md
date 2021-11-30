@@ -8,4 +8,4 @@ Aufgabe 3:
 https://aysegoe.github.io/GIS_Praktikum_OMB/Aufgabe3/index.html
 
 Aufgabe4 Verbesserung:
-https://aysegoe.github.io/GIS_Praktikum_OMB/Aufgabe4/events.html
+https://aysegoe.github.io/GIS_Praktikum_OMB/Aufgabe4/event.html
