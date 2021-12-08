@@ -19,5 +19,4 @@ const server = http.createServer((request, response) => {
     }
     response.end();
 });
-Date.addEventListener("click");
 //# sourceMappingURL=server.js.map

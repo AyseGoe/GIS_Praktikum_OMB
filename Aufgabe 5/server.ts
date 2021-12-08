@@ -25,4 +25,3 @@ const server: http.Server = http.createServer(
     }
   );
 
-    Date.addEventListener("click");
