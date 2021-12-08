@@ -14,15 +14,15 @@ namespace testNameSpace {
     let speichern: string;
 
     window.addEventListener("load", (): void => {
-      //localStorage.clear();
+      localStorage.clear();
       tabelleLadeen();
     });
 
     myButton.addEventListener("click", (): void => {
-      createTr(inputInterpret.value, inputPrice.value);
+      createTr(inputInterpret.value, inputPrice.value, true, 0);
     } );
     
-    function createTr(interpretWert: string, priceWert: string): void {
+    function createTr(interpretWert: string, priceWert: string, save: boolean, index: number): void {
       let tr: HTMLElement = document.createElement("tr");
       let interpret: HTMLElement = document.createElement("td");
       let price: HTMLElement = document.createElement("td");
@@ -38,19 +38,27 @@ namespace testNameSpace {
       tr.appendChild(price);
       tr.appendChild(removeBtn);
 
-      let eintrag: Reihe = {
-        interpret: interpret.textContent,
-        price: price.textContent
-      };
+      let speicherIndex: number = index;
 
-      reihe.push(eintrag);
-      speichern = JSON.stringify(reihe);
-
-      localStorage.setItem("einträge", speichern);
+      if (save == true) {
+        let eintrag: Reihe = {
+          interpret: interpret.textContent,
+          price: price.textContent
+        };
+  
+        reihe.push(eintrag);
+        speicherIndex = reihe.length - 1;
+  
+        speichern = JSON.stringify(reihe);
+        localStorage.setItem("einträge", speichern);
+      }
 
       removeBtn.addEventListener("click", function(): void {
+        reihe = JSON.parse(localStorage.getItem("einträge"));
+        reihe.splice(speicherIndex, 1);
+        speichern = JSON.stringify(reihe);
+        localStorage.setItem("einträge", speichern);
         tabelle.removeChild(tr);
-
       });
     }
 
@@ -60,11 +68,9 @@ namespace testNameSpace {
       laden = JSON.parse(localStorage.getItem("einträge"));
       console.log(laden);
       for (let i: number = 0; i < laden.length; i++) {
-        createTr(laden[i].interpret, laden[i].price);
+        createTr(laden[i].interpret, laden[i].price, false, i);
       }
       reihe = laden;
       laden = [];
     }
-
-
 }
