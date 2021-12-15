@@ -14,11 +14,12 @@ namespace testNameSpace {
     let speichern: string;
 
     window.addEventListener("load", (): void => {
-      localStorage.clear();
+      //localStorage.clear();
       tabelleLadeen();
     });
 
-    myButton.addEventListener("click", (): void => {
+    myButton.addEventListener("click", (event: Event): void => {
+      event.preventDefault();
       createTr(inputInterpret.value, inputPrice.value, true, 0);
     } );
     

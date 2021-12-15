@@ -9,10 +9,11 @@ var testNameSpace;
     let laden = [];
     let speichern;
     window.addEventListener("load", () => {
-        localStorage.clear();
+        //localStorage.clear();
         tabelleLadeen();
     });
-    myButton.addEventListener("click", () => {
+    myButton.addEventListener("click", (event) => {
+        event.preventDefault();
         createTr(inputInterpret.value, inputPrice.value, true, 0);
     });
     function createTr(interpretWert, priceWert, save, index) {
