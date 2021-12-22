@@ -1,5 +1,8 @@
 {
-  "devDependencies": {
-    "@types/node": "^16.11.13"
+  "scripts": {
+  "start": "node ./Aufgabe6/Server/server.js"
+  },
+  "dependencies": {
+  "@types/node": "^16.11.11"
   }
 }
