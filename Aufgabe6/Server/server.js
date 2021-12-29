@@ -1,49 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = require("http");
-// Abhängigkeit muss(wenn noch nicht vorhanden) zunächst mit "npm install @types/node"
 var Server;
 (function (Server) {
-    //Hostname des Servers: Da wir lokal arbeiten, ist die Serveradresse der Localhost
-    const hostname = "127.0.0.1"; //localhost
-    const port = 3000; //Port, auf dem der Server laufen soll
-    // Server Initialisierung
+    const hostname = "127.0.0.1";
+    const port = 3000;
+    const today = new Date();
+    // tslint:disable-next-line: typedef
+    const year = today.getFullYear;
     const server = http.createServer((request, response) => {
-        // Serverkonfigurationsfunktion
-        /*
-              Die Konfigurationsfunktion hat immer zwei Parameter.
-              Einmal besitzt Sie das Request-Objekt mit der eingehenden Anfrage
-              und das Response-Objekt, welches zum Handhaben der Server-Antwort dient
-              */
-        response.statusCode = 200; //hier wird der Status definiert: 200 heißt alles ist in Ordnung
-        // Nun können wir noch Header für die Rückgabe Definieren
-        response.setHeader("Content-Type", "text/plain"); //Hier Definieren wir den Rückgabetyp
-        response.setHeader("Access-Control-Allow-Origin", "*"); //Dieser Header Definiert, ob der Response-Header mit de, Herkunftsort der Anfrage geteilt werden kann
-        // "*" heißt der Header kann mit jedem geteilt werden. Das ist wichtig um später mögliche CORS-Fehlermeldungen zu vermeiden
-        //Routing der verschiedenen Pfade
-        //_________
-        let url = new URL(request.url || "", `http://${request.headers.host}`); //Für das Routing definieren wir zunächst ein URL-Objekt
-        // Nun Regeln wir mit einemm Switch-Case welcher Pfad, wie verarbeitet werden soll
+        response.statusCode = 200;
+        response.setHeader("Content-Type", "text/plain");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        let url = new URL(request.url || "", `http://IncomingMessage.headers."127.0.0.1`);
         switch (url.pathname) {
-            case "/": //Root-Pfad
-                response.write("Hello World");
+            case "/":
+                response.write("Server erreichbar");
                 break;
-            case "/greetings": //Spezifischer Pfad
-                let name = url.searchParams.get("name"); //Auslesen eines Get-Parameters "name"
-                console.log(name); // Ausgabe der Angekommenen get-Parameters in der Server-Konsole
-                response.write("Hallo " + name + ", schoen dich zu sehen!"); //Definieren der Rückgabe mit der name-Variable
+            case "/convertDate":
+                let date = url.searchParams.get("date");
+                console.log(date);
+                response.write(year);
                 break;
             default:
-                response.statusCode = 404; // Wenn der Pfad nicht gefunden wurde, wollen wir eine 404-Fehlermeldung zurückgeben
+                response.statusCode = 404;
         }
-        response.end(); //Abschließen und absenden der Server-Antwort
+        response.end();
     });
-    /*
-    Der Server muss noch wissen, über welchen Hostnamen und über welchen Port er auf Anfragen lauschen soll.
-    Das wird hier definiert:
-    */
     server.listen(port, hostname, () => {
-        console.log(`Server running at http://${hostname}:${port}`); //Wenn der Server erreichbar ist, soll folgendes ausgegeben werden.
+        console.log(`Server running at http://"127.0.0.1":3000`);
     });
 })(Server || (Server = {}));
 //# sourceMappingURL=server.js.map

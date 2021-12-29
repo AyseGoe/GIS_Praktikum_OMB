@@ -15,8 +15,13 @@ var testNameSpace;
     myButton.addEventListener("click", (event) => {
         event.preventDefault();
         createTr(inputInterpret.value, inputPrice.value, true, 0);
+        /*localStorage.eintrag = JSON.stringify({
+          "inputInterpret" : inputInterpret.value, "Inputprice" : inputPrice.value
+        });*/
     });
+    let removeId = 0;
     function createTr(interpretWert, priceWert, save, index) {
+        removeId = removeId + 1;
         let tr = document.createElement("tr");
         let interpret = document.createElement("td");
         let price = document.createElement("td");
@@ -24,6 +29,7 @@ var testNameSpace;
         price.textContent = priceWert;
         let removeBtn = document.createElement("button");
         removeBtn.textContent = "remove";
+        removeBtn.setAttribute("id", "removeBtn" + removeId);
         tabelle.appendChild(tr);
         tr.appendChild(interpret);
         tr.appendChild(price);
@@ -38,14 +44,29 @@ var testNameSpace;
             speicherIndex = reihe.length - 1;
             speichern = JSON.stringify(reihe);
             localStorage.setItem("einträge", speichern);
+            /* localStorage.einträge = JSON.stringify({
+               "inputInterpret" : inputInterpret.value, "Inputprice" : inputPrice.value
+             });*/
         }
         removeBtn.addEventListener("click", function () {
-            reihe = JSON.parse(localStorage.getItem("einträge"));
-            reihe.splice(speicherIndex, 1);
-            speichern = JSON.stringify(reihe);
-            localStorage.setItem("einträge", speichern);
-            tabelle.removeChild(tr);
+            let localStorageList = JSON.parse(localStorage.getItem("einträge"));
+            /*  reihe.splice(speicherIndex, 1);
+              speichern = JSON.stringify(reihe);
+              localStorage.setItem("einträge", speichern);
+             
+              tabelle.removeChild(tr);*/
+            let buttonId = this.id;
+            console.log(buttonId);
+            for (var i = 0; i < localStorageList.length; i++) {
+                var items = JSON.parse(localStorageList[i]);
+                if (reihe.itemId == buttonId) {
+                    reihe.splice(i, 1);
+                }
+            }
         });
+        /*localStorage.einträge = JSON.stringify({
+          "inputInterpret" : inputInterpret.value, "inputprice" : inputPrice.value
+        });*/
     }
     function tabelleLadeen() {
         if (localStorage.length < 1)
