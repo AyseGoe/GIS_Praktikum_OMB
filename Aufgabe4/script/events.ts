@@ -1,12 +1,13 @@
 namespace testNameSpace {
-    const inputInterpret: HTMLInputElement = <HTMLInputElement>document.getElementById("input.interpret");
-    const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("input-price");
+    const inputInterpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpret");
+    const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("price");
     const myButton: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#submit");
     const tabelle: HTMLElement = <HTMLElement>document.getElementById("tabelle");
 
     interface Reihe {
     interpret: string;
     price: string;
+    itemId: string;
   }
 
     let reihe: Reihe[] = [];
@@ -34,38 +35,37 @@ namespace testNameSpace {
       removeId = removeId + 1;
       let tr: HTMLElement = document.createElement("tr");
       let interpret: HTMLElement = document.createElement("td");
-
       let price: HTMLElement = document.createElement("td");
+      let removeBtnId: string = "removeBtn" + removeId;
 
       interpret.textContent = interpretWert;
       price.textContent = priceWert;
 
       let removeBtn: HTMLElement = document.createElement("button");
       removeBtn.textContent = "remove";
-      removeBtn.setAttribute("id", "removeBtn" + removeId);
-
+      removeBtn.setAttribute("id", removeBtnId);
 
       tabelle.appendChild(tr);
+      tr.setAttribute("id", "row-" + removeBtnId);
       tr.appendChild(interpret);
       tr.appendChild(price);
       tr.appendChild(removeBtn);
 
-      let speicherIndex: number = index;
-
-      
       if (save == true) {
         let eintrag: Reihe = {
           interpret: interpret.textContent,
-          price: price.textContent
-          
+          price: price.textContent,
+          itemId: removeBtnId
         };
   
         reihe.push(eintrag);
-        speicherIndex = reihe.length - 1;
   
         speichern = JSON.stringify(reihe);       
-        localStorage.setItem("einträge", speichern);        
-
+        localStorage.setItem("einträge", speichern);    
+        var interpretValue = (<HTMLInputElement>document.getElementById("interpret"));
+        var priceValue = (<HTMLInputElement>document.getElementById("price"));
+        interpretValue.value = null;
+        priceValue.value = null;
        /* localStorage.einträge = JSON.stringify({
           "inputInterpret" : inputInterpret.value, "Inputprice" : inputPrice.value
         });*/
@@ -79,15 +79,17 @@ namespace testNameSpace {
         localStorage.setItem("einträge", speichern);
        
         tabelle.removeChild(tr);*/
-        let buttonId = this.id;
-        console.log(buttonId); 
+        let buttonId: string = this.id;
         for (var i = 0; i < localStorageList.length; i++) {
-          var items = JSON.parse(localStorageList[i]);
-          if (reihe.itemId == buttonId) {
-              reihe.splice(i, 1);
+          var removedItem = localStorageList[i];
+          if (removedItem.itemId == buttonId) {
+            reihe.splice(i, 1);
           }
-      }
-        
+        }
+
+        speichern = JSON.stringify(reihe);
+        localStorage.setItem("einträge", speichern);
+        document.getElementById(this.id).parentElement.remove();
       });
 
       /*localStorage.einträge = JSON.stringify({
