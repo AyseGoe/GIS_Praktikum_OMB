@@ -15,3 +15,6 @@ https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe%205
 
 AUfgabe6:
 https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe6
+
+Aufgaeb8:
+https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe8
