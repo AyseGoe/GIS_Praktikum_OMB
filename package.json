@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "@types/node": "^16.11.11",
-    "mongodb": "^4.2.2"
+    "mongodb": "^4.3.0"
   },
   "name": "gis_praktikum_omb",
   "description": "Aufgabe1:\r https://aysegoe.github.io/GIS_Praktikum_OMB/Aufgabe1/index.html",
