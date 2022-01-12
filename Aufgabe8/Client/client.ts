@@ -7,7 +7,7 @@ const inputInterpret: HTMLInputElement = <HTMLInputElement>document.getElementBy
 const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("price");
 const tabelle: HTMLElement = <HTMLElement>document.getElementById("tabelle");   
 let removeId: number = 0;
-     
+//dasTypescript     
 const url: string = " mongodb://127.0.0.1//3000"; 
 const path: string = "/concertEvents"; 
 var MongoClient = require("mongodb").MongoClient;
