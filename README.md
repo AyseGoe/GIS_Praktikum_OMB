@@ -18,3 +18,6 @@ https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe6
 
 Aufgaeb8:
 https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe8
+
+Aufgabe4 Local Storage Verbesserung:
+https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe4
