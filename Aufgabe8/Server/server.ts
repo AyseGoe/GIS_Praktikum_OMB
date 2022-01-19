@@ -1,42 +1,21 @@
 import * as http from "http";
 import * as mongo from "mongodb";
-import * as dotenv from "dotenv";
 
 const hostname: string = "127.0.0.1"; // localhost
 const port: number = 3000;
+const mongoUrl: string = "mongodb://localhost:27017";
+let mongoClient: mongo.MongoClient = new mongo.MongoClient(mongoUrl);
 
 
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:3000/mydb";
+async function dbFind (
 
-
-export const collections: { server?: mongo.Collection } = {};
-
-export async function connectToDatabase () {
-    dotenv.config(); 
-    const client: mongo.MongoClient = new mongo.MongoClient(process.env.DB_CONN_STRING);            
-    await client.connect();       
-    const db: mongo.Db = client.db(process.env.DB_NAME);  
-    const serverCollection: mongo.Collection = db.collection(process.env.Server_COLLECTION_NAME);
- 
-     collections.server = serverCollection;       
-         console.log(`Successfully connected to database: ${db.databaseName} and collection: ${serverCollection.collectionName}`);
- }
-
-
-MongoClient.connect(url, function(err: any, db: any) {
-  if (err) throw err;
-  console.log("Database created!");
-  db.close();
-});
-
-async function dbFind(
     db: string,
     collection: string,
     requestObject: any,
     response: http.ServerResponse
   ) {
-    let result = await MongoClient
+
+    let result: any = await mongoClient
       .db(db)
       .collection(collection)
       .find(requestObject)
@@ -49,33 +28,39 @@ async function dbFind(
 const server: http.Server = http.createServer(
     async (request: http.IncomingMessage, response: http.ServerResponse) => {
       response.statusCode = 200;
-      // response.setHeader("Access-Control-Allow-Origin", "*"); // bei CORS Fehler
-      let url: URL = new URL(request.url || "", `http://127.0.0.1:3000`);
+      response.setHeader("Access-Control-Allow-Origin", "*"); 
+
+      let url: URL = new URL(request.url || "", `http://${request.headers.host}`);
       console.log("es läuft");
+
       switch (url.pathname) {
         case "/concertEvents": {
-          await MongoClient.connect();
+          await mongoClient.connect();
           switch (request.method) {
             case "GET":
+            //  mongoClient.db("mongodb_test").collection("test_eintraege").insertOne {
+            //    "name": "test",
+            //    "age": 20
+
+            //  });
               await dbFind(
                 "Konzert-Events",
                 "Konzert",
                 {
-                  KonzertNr: Number(url.searchParams.get("KonzertNr"))
+                  index: Number(url.searchParams.get("index"))
                 },
                 response
               );
-              console.log("KonzertNr");
               break;
             case "POST":
-              let jsonString = "KonzertNr";
-              request.on("KonzertNr", data => {
+              let jsonString: string = "";
+              request.on("data", data => {
                 jsonString += data;
               });
               request.on("end", async () => {
-                MongoClient
-                  .db("Konzert-Events")
-                  .collection("Konzert")
+                mongoClient
+                  .db("Konzert")
+                  .collection("Konzert--Events")
                   .insertOne(JSON.parse(jsonString));
               });
               break;
@@ -83,7 +68,7 @@ const server: http.Server = http.createServer(
           break;
         }
         case "/Konzert": {
-          await MongoClient.connect();
+          await mongoClient.connect();
           switch (request.method) {
             case "GET":
               await dbFind("Konzert-Events", "Konzert", {}, response);
@@ -99,6 +84,5 @@ const server: http.Server = http.createServer(
   );
   
 server.listen(port, hostname, () => {
-    console.log(`Server running at http://127.0.0.1:3000/`);
-    console.log("es läuft");
+    console.log(`Server running at http://${hostname}:${port}/`);
   });

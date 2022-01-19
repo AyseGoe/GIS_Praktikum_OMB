@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "start": "node ./Aufgabe8/Server/server.js"
+  },
+  "dependencies": {
+    "@types/node": "^16.11.11",
+    "mongodb": "^4.3.0"
+  },
+  "name": "gis_praktikum_omb",
+  "description": "Aufgabe1:\r https://aysegoe.github.io/GIS_Praktikum_OMB/Aufgabe1/index.html",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyseGoe/GIS_Praktikum_OMB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyseGoe/GIS_Praktikum_OMB/issues"
+  },
+  "homepage": "https://github.com/AyseGoe/GIS_Praktikum_OMB#readme"
+}

@@ -1,35 +1,75 @@
-import * as http from "http";
-import * as mongo from "mongodb";
-
-const myForm: HTMLFormElement = <HTMLFormElement>document.getElementById("myform"); 
+//const myForm: HTMLFormElement = <HTMLFormElement>document.getElementById("myform"); 
 const sendButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("send-button"); 
 const inputInterpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpret");
 const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("price");
 const tabelle: HTMLElement = <HTMLElement>document.getElementById("tabelle");   
 let removeId: number = 0;
+
 //dasTypescript     
-const url: string = " mongodb://127.0.0.1//3000"; 
-const path: string = "/concertEvents"; 
-var MongoClient = require("mongodb").MongoClient;
-const database: mongo.Collection;
+
+const url: string = "http://localhost:3000/"; 
+const pathEinzeln: string = "concertEvents";
+const pathAlle: string = "Konzert"; 
 
 
 interface Reihe {
+  index: number;
   interpret: string;
   price: string;
   itemId: string;
+  save: string;
 }
 
-let reihe: Reihe[] = [];
-let laden: Reihe[] = [];
-let speichern: string;
+let eventFromSever: Reihe[] = []; 
 
-sendButton.addEventListener("click", (event: Event): void => {
-  event.preventDefault();
-  createTr(inputInterpret.value, inputPrice.value, true, 0);
+window.addEventListener("load", () => {
+  sendForm();
 });
+sendButton.addEventListener("click", onSendeButton);
 
-function createTr(interpretWert: string, priceWert: string, save: boolean, index: number): void {
+
+async function sendForm(): Promise<void> {
+    let response: Response = await fetch(url + pathAlle); 
+    let responseText: string = await response.text(); 
+    eventFromSever = JSON.parse(responseText);
+    console.log(eventFromSever);
+
+    for ( let i: number = 0; i < eventFromSever.length; i++) {
+      createTr(eventFromSever[i].interpret,  eventFromSever[i].price, eventFromSever[i].save, eventFromSever[i].index);
+     }
+} 
+
+async function onSendeButton(event: Event): Promise<void> {
+  event.preventDefault();
+
+  let Konzert: Reihe = {
+    index: eventFromSever.length - 1,
+    interpret: inputInterpret.value,
+    price: inputPrice.value,
+    itemId: "",
+    save: ""
+  };
+  eventFromSever.push(Konzert);
+  console.log(Konzert);
+
+  createTr(Konzert.interpret, Konzert.price, Konzert.itemId, Konzert.index);
+
+  sendJSONStringWithPost(url + pathEinzeln, JSON.stringify(Konzert));
+
+  setTimeout(() => {
+      clearInput();
+  },         100);
+}
+
+async function sendJSONStringWithPost(url: RequestInfo, jsonString: string): Promise<void> {
+  await fetch(url, {
+      method: "POST",
+      body: jsonString
+  });
+  console.log("event sent");
+}
+
+function createTr(interpretWert: string, priceWert: string, save: string, index: number): void {
   removeId = removeId + 1;
   let tr: HTMLElement = document.createElement("tr");
   let interpret: HTMLElement = document.createElement("td");
@@ -50,67 +90,9 @@ function createTr(interpretWert: string, priceWert: string, save: boolean, index
   tr.appendChild(removeBtn);
 }
 
-GET: "mongodb://127.0.0.1//3000";
-Host: MongoClient;
-
-async function dbFind(
-    db: string,
-    collection: string,
-    requestObject: any,
-    response: http.ServerResponse
-  ) {
-    let result = await MongoClient
-      .db(db)
-      .collection(collection)
-      .find(requestObject)
-      .toArray();
-    
-    response.setHeader("Content-Type", "application/json");
-    response.write(JSON.stringify(result));
-  }
-  
-sendButton.addEventListener("click", function (evt: Event) {
-    evt.preventDefault();
-    sendForm(); 
-});
-
-console.log(myForm, sendButton);
-
-async function sendForm(): Promise<void> {
-
-    let formData: FormData = new FormData(myForm); 
-    let query: URLSearchParams = new URLSearchParams(<any>formData); 
-    let urlWithQuery: string = url + path + "KonzertNr" + query.toString(); 
-
-    let response: Response = await fetch(urlWithQuery); 
-    let responseText: string = await response.text(); 
-    console.log(responseText);
-} 
-
-
-async (request: http.IncomingMessage, response: http.ServerResponse) => {
-    response.statusCode = 200;
-    let url: URL = new URL(request.url || "", ` mongodb://127.0.0.1//3000`);
-    console.log("es läuft");
-    switch (url.pathname) {
-      case "/concertEvents": {
-        await MongoClient.connect();
-        switch (request.method) {
-          case "GET":
-            await dbFind(
-              "Konzert-Events",
-              "Konzert",
-              {
-                KonzertNr: Number(url.searchParams.get("KonzertNr"))
-              },
-              response
-            );
-            console.log("KonzertNr");
-            break;
-          case "POST":
-            let jsonString = "KonzertNr";
-            response.on("KonzertNr", data => {
-         jsonString += data;
-          },
-  }  
+function clearInput(): void {
+  inputInterpret.value = "";
+  inputPrice.value = "";
 }
+
+
