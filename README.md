@@ -27,3 +27,6 @@ https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe8
 
 Aufgabe 6 Verbesserung:
 https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe6
+
+Aufgabe 6 Verbesserung:
+https://github.com/AyseGoe/GIS_Praktikum_OMB/tree/main/Aufgabe6
