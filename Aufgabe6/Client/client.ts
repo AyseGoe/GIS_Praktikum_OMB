@@ -24,4 +24,8 @@ module Client {
     }
 }
 
+<<<<<<< HEAD
 const saveDatePath: string = "";
+=======
+const saveDatePath: string = "";
+>>>>>>> 51629481273e797b10f78b99319d30d889b680ff
