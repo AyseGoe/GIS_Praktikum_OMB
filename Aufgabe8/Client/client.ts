@@ -1,24 +1,21 @@
 //const myForm: HTMLFormElement = <HTMLFormElement>document.getElementById("myform"); 
-const sendButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("send-button"); 
+const sendButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("sendButton"); 
 const inputInterpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpret");
 const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("price");
 const tabelle: HTMLElement = <HTMLElement>document.getElementById("tabelle");   
 let removeId: number = 0;
+console.log(sendButton);
 
 //dasTypescript     
 
-const url: string = "http://localhost:3000/"; 
-const pathEinzeln: string = "concertEvents";
-const pathAlle: string = "Konzert"; 
-
+const url: string = "http://localhost:3000"; 
+const pathEinzeln: string = "/concertEvents";
 
 interface Reihe {
-  index: number;
   interpret: string;
   price: string;
-  itemId: string;
-  save: string;
 }
+
 
 let eventFromSever: Reihe[] = []; 
 
@@ -29,30 +26,27 @@ sendButton.addEventListener("click", onSendeButton);
 
 
 async function sendForm(): Promise<void> {
-    let response: Response = await fetch(url + pathAlle); 
+   /* let response: Response = await fetch(url + pathAlle); 
     let responseText: string = await response.text(); 
     eventFromSever = JSON.parse(responseText);
     console.log(eventFromSever);
 
     for ( let i: number = 0; i < eventFromSever.length; i++) {
       createTr(eventFromSever[i].interpret,  eventFromSever[i].price, eventFromSever[i].save, eventFromSever[i].index);
-     }
+     }*/
 } 
 
 async function onSendeButton(event: Event): Promise<void> {
   event.preventDefault();
 
   let Konzert: Reihe = {
-    index: eventFromSever.length - 1,
     interpret: inputInterpret.value,
-    price: inputPrice.value,
-    itemId: "",
-    save: ""
+    price: inputPrice.value
   };
   eventFromSever.push(Konzert);
   console.log(Konzert);
 
-  createTr(Konzert.interpret, Konzert.price, Konzert.itemId, Konzert.index);
+  createTr(Konzert.interpret, Konzert.price);
 
   sendJSONStringWithPost(url + pathEinzeln, JSON.stringify(Konzert));
 
@@ -69,8 +63,8 @@ async function sendJSONStringWithPost(url: RequestInfo, jsonString: string): Pro
   console.log("event sent");
 }
 
-function createTr(interpretWert: string, priceWert: string, save: string, index: number): void {
-  removeId = removeId + 1;
+function createTr(interpretWert: string, priceWert: string): void {
+ /* removeId = removeId + 1;
   let tr: HTMLElement = document.createElement("tr");
   let interpret: HTMLElement = document.createElement("td");
   let price: HTMLElement = document.createElement("td");
@@ -87,7 +81,7 @@ function createTr(interpretWert: string, priceWert: string, save: string, index:
   tr.setAttribute("id", "row-" + removeBtnId);
   tr.appendChild(interpret);
   tr.appendChild(price);
-  tr.appendChild(removeBtn);
+  tr.appendChild(removeBtn);*/
 }
 
 function clearInput(): void {

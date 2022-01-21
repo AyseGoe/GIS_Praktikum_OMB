@@ -1,38 +1,23 @@
 "use strict";
 var Client;
 (function (Client) {
-    const url = "http://127.0.0.1:3000";
-    const path = "/convertDate";
-    //  const anderepath: string ="/"  ;
-    const myForm = document.getElementById("myform");
-    const sendButton = document.getElementById("send-button");
-    const convertButton = document.getElementById("convert-button");
+    const url = "http://localhost:3000/";
+    const saveDatePath = "saveDate";
+    const form = document.getElementById("myform");
+    const sendDateButton = document.getElementById("send-button");
     const display = document.getElementById("display");
-    const date = document.getElementById("date");
-    sendButton.addEventListener("click", function (evt) {
+    sendDateButton.addEventListener("click", (evt) => {
         evt.preventDefault();
-        sendForm();
+        sendForm(saveDatePath);
     });
-    async function GetDate(url) {
-        let response = await fetch(url);
-        let responseText = await response.text();
-        return responseText;
-    }
-    async function sendForm() {
-        let inputValue = JSON.stringify(date.value);
-        let serverAntwort = await GetDate(url + path + `?responseText =${inputValue}`);
-        sendForm2(serverAntwort);
-        //datezumServer
-        //  let formData: FormData = new FormData(myForm); 
-        //  let query: URLSearchParams = new URLSearchParams(<any>formData); 
-        //  let urlWithQuery: string = url + path + "?" + query.toString(); 
-    }
-    function sendForm2(ServerResponse) {
-        let neudate = document.createElement("p");
-        neudate.className = "ServerResponse";
-        neudate.textContent = ServerResponse;
-        display.appendChild(neudate);
+    async function sendForm(path) {
+        let formData = new FormData(form);
+        let query = new URLSearchParams(formData);
+        let urlWithQuery = url + path + "?" + query.toString();
+        let response = await fetch(urlWithQuery);
+        let text = await response.text();
+        display.textContent = text;
     }
 })(Client || (Client = {}));
-const convertDatePath = "";
+const saveDatePath = "";
 //# sourceMappingURL=client.js.map

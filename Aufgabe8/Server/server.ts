@@ -28,6 +28,7 @@ async function dbFind (
 const server: http.Server = http.createServer(
     async (request: http.IncomingMessage, response: http.ServerResponse) => {
       response.statusCode = 200;
+      response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE");
       response.setHeader("Access-Control-Allow-Origin", "*"); 
 
       let url: URL = new URL(request.url || "", `http://${request.headers.host}`);
@@ -38,11 +39,6 @@ const server: http.Server = http.createServer(
           await mongoClient.connect();
           switch (request.method) {
             case "GET":
-            //  mongoClient.db("mongodb_test").collection("test_eintraege").insertOne {
-            //    "name": "test",
-            //    "age": 20
-
-            //  });
               await dbFind(
                 "Konzert-Events",
                 "Konzert",
@@ -60,18 +56,9 @@ const server: http.Server = http.createServer(
               request.on("end", async () => {
                 mongoClient
                   .db("Konzert")
-                  .collection("Konzert--Events")
+                  .collection("Konzert-Events")
                   .insertOne(JSON.parse(jsonString));
               });
-              break;
-          }
-          break;
-        }
-        case "/Konzert": {
-          await mongoClient.connect();
-          switch (request.method) {
-            case "GET":
-              await dbFind("Konzert-Events", "Konzert", {}, response);
               break;
           }
           break;
