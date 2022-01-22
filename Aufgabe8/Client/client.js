@@ -8,21 +8,21 @@ let removeId = 0;
 console.log(sendButton);
 //dasTypescript     
 const url = "http://localhost:3000";
-const pathEinzeln = "/concertEvents";
+const path = "/concertEvents";
 let eventFromSever = [];
 window.addEventListener("load", () => {
     getData();
 });
 sendButton.addEventListener("click", onSendeButton);
 async function getData() {
-    /* let response: Response = await fetch(url + pathAlle);
-     let responseText: string = await response.text();
-     eventFromSever = JSON.parse(responseText);
-     console.log(eventFromSever);
- 
-     for ( let i: number = 0; i < eventFromSever.length; i++) {
-       createTr(eventFromSever[i].interpret,  eventFromSever[i].price, eventFromSever[i].save, eventFromSever[i].index);
-      }*/
+    let response = await fetch(url + path);
+    let responseText = await response.text();
+    console.log(responseText);
+    eventFromSever = JSON.parse(responseText);
+    console.log(eventFromSever);
+    for (let i = 0; i < eventFromSever.length; i++) {
+        createTr(eventFromSever[i].interpret, eventFromSever[i].price);
+    }
 }
 async function onSendeButton(event) {
     event.preventDefault();
@@ -33,7 +33,7 @@ async function onSendeButton(event) {
     //eventFromSever.push(Konzert);
     console.log(Konzert);
     createTr(Konzert.interpret, Konzert.price);
-    sendJSONStringWithPost(url + pathEinzeln, JSON.stringify(Konzert));
+    sendJSONStringWithPost(url + path, JSON.stringify(Konzert));
     setTimeout(() => {
         clearInput();
     }, 100);
@@ -46,24 +46,21 @@ async function sendJSONStringWithPost(url, jsonString) {
     console.log("event sent");
 }
 function createTr(interpretWert, priceWert) {
-    /* removeId = removeId + 1;
-     let tr: HTMLElement = document.createElement("tr");
-     let interpret: HTMLElement = document.createElement("td");
-     let price: HTMLElement = document.createElement("td");
-     let removeBtnId: string = "removeBtn" + removeId;
-   
-     interpret.textContent = interpretWert;
-     price.textContent = priceWert;
-   
-     let removeBtn: HTMLElement = document.createElement("button");
-     removeBtn.textContent = "remove";
-     removeBtn.setAttribute("id", removeBtnId);
-   
-     tabelle.appendChild(tr);
-     tr.setAttribute("id", "row-" + removeBtnId);
-     tr.appendChild(interpret);
-     tr.appendChild(price);
-     tr.appendChild(removeBtn);*/
+    removeId = removeId + 1;
+    let tr = document.createElement("tr");
+    let interpret = document.createElement("td");
+    let price = document.createElement("td");
+    let removeBtnId = "removeBtn" + removeId;
+    interpret.textContent = interpretWert;
+    price.textContent = priceWert;
+    let removeBtn = document.createElement("button");
+    removeBtn.textContent = "remove";
+    removeBtn.setAttribute("id", removeBtnId);
+    tabelle.appendChild(tr);
+    tr.setAttribute("id", "row-" + removeBtnId);
+    tr.appendChild(interpret);
+    tr.appendChild(price);
+    tr.appendChild(removeBtn);
 }
 function clearInput() {
     inputInterpret.value = "";

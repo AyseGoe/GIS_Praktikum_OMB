@@ -3,7 +3,7 @@ import * as mongo from "mongodb";
 
 const hostname: string = "127.0.0.1"; // localhost
 const port: number = 3000;
-const mongoUrl: string = "mongodb://localhost:27017";
+const mongoUrl: string = "mongodb://127.0.0.1:27017";
 let mongoClient: mongo.MongoClient = new mongo.MongoClient(mongoUrl);
 
 
@@ -40,10 +40,9 @@ const server: http.Server = http.createServer(
           switch (request.method) {
             case "GET":
               await dbFind(
-                "Konzert-Events",
                 "Konzert",
+                "Konzert-Events",
                 {
-                  index: Number(url.searchParams.get("index"))
                 },
                 response
               );

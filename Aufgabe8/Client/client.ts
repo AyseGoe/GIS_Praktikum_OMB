@@ -9,7 +9,7 @@ console.log(sendButton);
 //dasTypescript     
 
 const url: string = "http://localhost:3000"; 
-const pathEinzeln: string = "/concertEvents";
+const path: string = "/concertEvents";
 
 interface Reihe {
   interpret: string;
@@ -26,14 +26,15 @@ sendButton.addEventListener("click", onSendeButton);
 
 
 async function getData(): Promise<void> {
-   /* let response: Response = await fetch(url + pathAlle); 
+    let response: Response = await fetch(url + path); 
     let responseText: string = await response.text(); 
+    console.log(responseText);
     eventFromSever = JSON.parse(responseText);
     console.log(eventFromSever);
 
     for ( let i: number = 0; i < eventFromSever.length; i++) {
-      createTr(eventFromSever[i].interpret,  eventFromSever[i].price, eventFromSever[i].save, eventFromSever[i].index);
-     }*/
+      createTr(eventFromSever[i].interpret,  eventFromSever[i].price);
+     }
 } 
 
 async function onSendeButton(event: Event): Promise<void> {
@@ -48,7 +49,7 @@ async function onSendeButton(event: Event): Promise<void> {
 
   createTr(Konzert.interpret, Konzert.price);
 
-  sendJSONStringWithPost(url + pathEinzeln, JSON.stringify(Konzert));
+  sendJSONStringWithPost(url + path, JSON.stringify(Konzert));
 
   setTimeout(() => {
       clearInput();
@@ -64,7 +65,7 @@ async function sendJSONStringWithPost(url: RequestInfo, jsonString: string): Pro
 }
 
 function createTr(interpretWert: string, priceWert: string): void {
- /* removeId = removeId + 1;
+  removeId = removeId + 1;
   let tr: HTMLElement = document.createElement("tr");
   let interpret: HTMLElement = document.createElement("td");
   let price: HTMLElement = document.createElement("td");
@@ -81,7 +82,7 @@ function createTr(interpretWert: string, priceWert: string): void {
   tr.setAttribute("id", "row-" + removeBtnId);
   tr.appendChild(interpret);
   tr.appendChild(price);
-  tr.appendChild(removeBtn);*/
+  tr.appendChild(removeBtn);
 }
 
 function clearInput(): void {

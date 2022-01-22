@@ -56,8 +56,5 @@ module Server {
   server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 51629481273e797b10f78b99319d30d889b680ff
+

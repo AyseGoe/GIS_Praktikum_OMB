@@ -4,7 +4,7 @@ const http = require("http");
 const mongo = require("mongodb");
 const hostname = "127.0.0.1"; // localhost
 const port = 3000;
-const mongoUrl = "mongodb://localhost:27017";
+const mongoUrl = "mongodb://127.0.0.1:27017";
 let mongoClient = new mongo.MongoClient(mongoUrl);
 async function dbFind(db, collection, requestObject, response) {
     let result = await mongoClient
@@ -26,9 +26,7 @@ const server = http.createServer(async (request, response) => {
             await mongoClient.connect();
             switch (request.method) {
                 case "GET":
-                    await dbFind("Konzert-Events", "Konzert", {
-                        index: Number(url.searchParams.get("index"))
-                    }, response);
+                    await dbFind("Konzert", "Konzert-Events", {}, response);
                     break;
                 case "POST":
                     let jsonString = "";
