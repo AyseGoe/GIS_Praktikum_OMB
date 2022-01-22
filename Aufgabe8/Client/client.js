@@ -11,10 +11,10 @@ const url = "http://localhost:3000";
 const pathEinzeln = "/concertEvents";
 let eventFromSever = [];
 window.addEventListener("load", () => {
-    sendForm();
+    getData();
 });
 sendButton.addEventListener("click", onSendeButton);
-async function sendForm() {
+async function getData() {
     /* let response: Response = await fetch(url + pathAlle);
      let responseText: string = await response.text();
      eventFromSever = JSON.parse(responseText);
@@ -30,7 +30,7 @@ async function onSendeButton(event) {
         interpret: inputInterpret.value,
         price: inputPrice.value
     };
-    eventFromSever.push(Konzert);
+    //eventFromSever.push(Konzert);
     console.log(Konzert);
     createTr(Konzert.interpret, Konzert.price);
     sendJSONStringWithPost(url + pathEinzeln, JSON.stringify(Konzert));

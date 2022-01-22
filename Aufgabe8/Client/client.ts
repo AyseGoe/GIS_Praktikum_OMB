@@ -20,12 +20,12 @@ interface Reihe {
 let eventFromSever: Reihe[] = []; 
 
 window.addEventListener("load", () => {
-  sendForm();
+  getData();
 });
 sendButton.addEventListener("click", onSendeButton);
 
 
-async function sendForm(): Promise<void> {
+async function getData(): Promise<void> {
    /* let response: Response = await fetch(url + pathAlle); 
     let responseText: string = await response.text(); 
     eventFromSever = JSON.parse(responseText);
@@ -43,7 +43,7 @@ async function onSendeButton(event: Event): Promise<void> {
     interpret: inputInterpret.value,
     price: inputPrice.value
   };
-  eventFromSever.push(Konzert);
+ //eventFromSever.push(Konzert);
   console.log(Konzert);
 
   createTr(Konzert.interpret, Konzert.price);
